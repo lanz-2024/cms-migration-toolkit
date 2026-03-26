@@ -1,0 +1,29 @@
+# docker-compose.yml for cms-migration-toolkit
+# Provides isolated environments for running migrations and tests
+# Usage: docker compose run --rm migrate [command]
+
+services:
+  # Run the CLI inside Docker (useful for CI/CD pipelines)
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./examples:/app/examples:ro
+      - ./output:/app/output
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+
+  # Development container with watch mode
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: pnpm test:watch
+    profiles:
+      - dev
