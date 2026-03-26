@@ -1,0 +1,76 @@
+{
+  "entries": [
+    {
+      "id": "101",
+      "title": "Getting Started with Headless CMS",
+      "slug": "getting-started-headless-cms",
+      "entryType": "article",
+      "dateCreated": "2024-01-15T09:00:00Z",
+      "dateUpdated": "2024-02-20T14:30:00Z",
+      "fields": {
+        "title": "Getting Started with Headless CMS",
+        "body": "<p>A headless CMS decouples content management from content presentation...</p><p>This approach gives developers full control over the frontend stack.</p>",
+        "heroImage": [
+          {
+            "id": "201",
+            "filename": "headless-cms-hero.jpg",
+            "url": "https://cdn.example.com/uploads/headless-cms-hero.jpg",
+            "width": 1920,
+            "height": 1080,
+            "alt": "Diagram showing headless CMS architecture"
+          }
+        ],
+        "relatedArticles": ["102", "103"]
+      }
+    },
+    {
+      "id": "102",
+      "title": "Migrating from WordPress to Payload CMS",
+      "slug": "migrating-wordpress-payload-cms",
+      "entryType": "article",
+      "dateCreated": "2024-02-01T10:00:00Z",
+      "dateUpdated": "2024-03-05T11:00:00Z",
+      "fields": {
+        "title": "Migrating from WordPress to Payload CMS",
+        "body": "<p>WordPress remains the most widely used CMS, but Payload CMS offers a TypeScript-native alternative...</p>",
+        "heroImage": [],
+        "relatedArticles": ["101"]
+      }
+    },
+    {
+      "id": "201",
+      "title": "E-Commerce Redesign",
+      "slug": "e-commerce-redesign",
+      "entryType": "project",
+      "dateCreated": "2024-03-01T08:00:00Z",
+      "dateUpdated": "2024-03-20T16:45:00Z",
+      "fields": {
+        "title": "E-Commerce Redesign",
+        "summary": "A full redesign of an e-commerce platform using Next.js and Payload CMS.",
+        "content": [
+          {
+            "blockType": "textBlock",
+            "text": "<p>The project involved migrating over 5,000 product pages from a legacy Craft CMS installation...</p>"
+          },
+          {
+            "blockType": "imageBlock",
+            "image": {
+              "id": "301",
+              "filename": "ecommerce-before.jpg",
+              "url": "https://cdn.example.com/uploads/ecommerce-before.jpg",
+              "width": 1200,
+              "height": 800,
+              "alt": "Screenshot of the old e-commerce site"
+            },
+            "caption": "The original site before redesign"
+          },
+          {
+            "blockType": "textBlock",
+            "text": "<p>The migration was completed over two weekends using the cms-migration-toolkit...</p>"
+          }
+        ],
+        "featured": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "cms-migration-toolkit",
+  "version": "0.1.0",
+  "description": "CLI tool for migrating content between CMS platforms (Craft, Payload, WordPress) with validation and dual-run comparison",
+  "type": "module",
+  "bin": {
+    "cms-migrate": "./dist/cli.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli/index.ts",
+    "build": "tsup",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:coverage": "vitest run --coverage",
+    "test:ci": "vitest run --coverage --reporter=junit",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "chalk": "^5.4.0",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.0.0",
+    "deep-diff": "^1.0.2",
+    "inquirer": "^12.0.0",
+    "p-queue": "^8.0.0",
+    "pino": "^9.0.0",
+    "pino-pretty": "^13.0.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/cli-progress": "^3.11.0",
+    "@types/deep-diff": "^1.0.3",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "tsx": "^4.19.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

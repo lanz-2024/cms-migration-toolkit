@@ -1,0 +1,83 @@
+{
+  "entryTypes": [
+    {
+      "handle": "article",
+      "name": "Article",
+      "fields": [
+        {
+          "handle": "title",
+          "name": "Title",
+          "type": "craft:PlainText",
+          "required": true
+        },
+        {
+          "handle": "body",
+          "name": "Body",
+          "type": "craft:RichText",
+          "required": false
+        },
+        {
+          "handle": "heroImage",
+          "name": "Hero Image",
+          "type": "craft:Assets",
+          "required": false,
+          "allowedKinds": ["image"]
+        },
+        {
+          "handle": "relatedArticles",
+          "name": "Related Articles",
+          "type": "craft:Entries",
+          "required": false,
+          "sources": ["article"]
+        }
+      ]
+    },
+    {
+      "handle": "project",
+      "name": "Project",
+      "fields": [
+        {
+          "handle": "title",
+          "name": "Title",
+          "type": "craft:PlainText",
+          "required": true
+        },
+        {
+          "handle": "summary",
+          "name": "Summary",
+          "type": "craft:PlainText",
+          "required": false
+        },
+        {
+          "handle": "content",
+          "name": "Content",
+          "type": "craft:Matrix",
+          "required": false,
+          "blockTypes": [
+            {
+              "handle": "textBlock",
+              "name": "Text Block",
+              "fields": [
+                { "handle": "text", "type": "craft:RichText" }
+              ]
+            },
+            {
+              "handle": "imageBlock",
+              "name": "Image Block",
+              "fields": [
+                { "handle": "image", "type": "craft:Assets" },
+                { "handle": "caption", "type": "craft:PlainText" }
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "featured",
+          "name": "Featured",
+          "type": "craft:Checkboxes",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
