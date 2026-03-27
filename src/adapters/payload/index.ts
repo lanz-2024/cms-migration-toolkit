@@ -6,7 +6,7 @@ import type {
   FetchEntriesOptions,
   FetchEntriesResult,
 } from '../types.js';
-import { type PayloadClientConfig, PayloadClient } from './client.js';
+import { PayloadClient, type PayloadClientConfig } from './client.js';
 import { PayloadSchemaWriter } from './schema-writer.js';
 
 interface PayloadDoc {

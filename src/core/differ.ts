@@ -34,7 +34,9 @@ export class ContentDiffer {
     const differences: FieldDifference[] = rawDiffs
       .filter((d) => {
         const topLevelKey = d.path?.[0];
-        return topLevelKey !== undefined && !this.options.ignoreFields.includes(String(topLevelKey));
+        return (
+          topLevelKey !== undefined && !this.options.ignoreFields.includes(String(topLevelKey))
+        );
       })
       .map((d): FieldDifference => {
         let kind: FieldDifference['kind'];
@@ -133,15 +135,14 @@ export class ContentDiffer {
     const identical = diffs.filter((d) => d.identical).length;
     const different = diffs.filter((d) => !d.identical).length;
 
-    const lines = [
-      `Comparison report: ${identical} identical, ${different} different`,
-      '',
-    ];
+    const lines = [`Comparison report: ${identical} identical, ${different} different`, ''];
 
     for (const diff of diffs.filter((d) => !d.identical)) {
       lines.push(`  [${diff.contentType}] ${diff.slug} (${diff.differences.length} difference(s))`);
       for (const fd of diff.differences.slice(0, 5)) {
-        lines.push(`    ${fd.kind.toUpperCase()} .${fd.path.join('.')}: ${JSON.stringify(fd.sourceValue)} → ${JSON.stringify(fd.targetValue)}`);
+        lines.push(
+          `    ${fd.kind.toUpperCase()} .${fd.path.join('.')}: ${JSON.stringify(fd.sourceValue)} → ${JSON.stringify(fd.targetValue)}`,
+        );
       }
       if (diff.differences.length > 5) {
         lines.push(`    … and ${diff.differences.length - 5} more`);

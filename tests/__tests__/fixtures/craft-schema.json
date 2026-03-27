@@ -57,9 +57,7 @@
             {
               "handle": "textBlock",
               "name": "Text Block",
-              "fields": [
-                { "handle": "text", "type": "craft:RichText" }
-              ]
+              "fields": [{ "handle": "text", "type": "craft:RichText" }]
             },
             {
               "handle": "imageBlock",

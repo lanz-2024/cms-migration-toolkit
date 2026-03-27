@@ -20,7 +20,8 @@
         "useConst": "error"
       },
       "complexity": {
-        "noExcessiveCognitiveComplexity": "warn"
+        "noExcessiveCognitiveComplexity": "warn",
+        "useLiteralKeys": "off"
       }
     }
   },

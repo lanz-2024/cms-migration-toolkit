@@ -85,10 +85,7 @@ export class RollbackStrategy {
 
     for (const entry of toDelete) {
       if (this.options.dryRun) {
-        this.logger.info(
-          { id: entry.targetId, slug: entry.slug },
-          '[DRY RUN] Would delete entry',
-        );
+        this.logger.info({ id: entry.targetId, slug: entry.slug }, '[DRY RUN] Would delete entry');
         deleted++;
         continue;
       }
@@ -99,7 +96,10 @@ export class RollbackStrategy {
         this.logger.debug({ id: entry.targetId, slug: entry.slug }, 'Rolled back entry');
       } catch (err) {
         failed++;
-        this.logger.error({ id: entry.targetId, slug: entry.slug, err }, 'Failed to roll back entry');
+        this.logger.error(
+          { id: entry.targetId, slug: entry.slug, err },
+          'Failed to roll back entry',
+        );
       }
     }
 

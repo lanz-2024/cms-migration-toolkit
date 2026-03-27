@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import PQueue from 'p-queue';
 import pino from 'pino';
-import type { CMSAdapter, MigrationStats } from '../adapters/types.js';
+import type { CMSAdapter, CMSEntry, MigrationStats } from '../adapters/types.js';
 import type { FieldMapper } from '../mappers/field-mapper.js';
 
 export interface PipelineOptions {
@@ -95,7 +95,10 @@ export class MigrationPipeline {
       try {
         await this.processContentType(contentType.handle, stats);
       } catch (err) {
-        this.logger.error({ contentType: contentType.handle, err }, 'Content type processing failed');
+        this.logger.error(
+          { contentType: contentType.handle, err },
+          'Content type processing failed',
+        );
         if (this.options.stopOnError) {
           throw err;
         }
@@ -154,20 +157,14 @@ export class MigrationPipeline {
     }
   }
 
-  private async processEntry(
-    entry: Parameters<typeof this.source.fetchEntries>[0] extends never ? never : Awaited<ReturnType<typeof this.source.fetchEntries>>['entries'][number],
-    stats: MigrationStats,
-  ): Promise<void>;
-
-  private async processEntry(
-    entry: { id: string; slug: string; contentType: string; [key: string]: unknown },
-    stats: MigrationStats,
-  ): Promise<void> {
+  private async processEntry(entry: CMSEntry, stats: MigrationStats): Promise<void> {
     let attempt = 0;
 
     while (attempt <= this.options.maxRetries) {
       try {
-        const transformed = this.mapper.transform(entry as Parameters<typeof this.mapper.transform>[0]);
+        const transformed = this.mapper.transform(
+          entry as unknown as Parameters<typeof this.mapper.transform>[0],
+        );
 
         if (this.options.dryRun) {
           this.logger.info({ id: entry.id, slug: entry.slug }, '[DRY RUN] Would migrate entry');
@@ -197,7 +194,11 @@ export class MigrationPipeline {
     }
   }
 
-  private saveCheckpoint(contentType: string, lastProcessedId: string, processedCount: number): void {
+  private saveCheckpoint(
+    contentType: string,
+    lastProcessedId: string,
+    processedCount: number,
+  ): void {
     this.checkpoints.set(contentType, {
       contentType,
       lastProcessedId,

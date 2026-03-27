@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
+import { ContentDiffer } from '../../core/differ.js';
+import { ContentValidator } from '../../core/validator.js';
 import { createAdapter } from '../adapter-factory.js';
 import { ConfigLoadError, loadConfig } from '../config-loader.js';
-import { ContentValidator } from '../../core/validator.js';
-import { ContentDiffer } from '../../core/differ.js';
 
 interface ValidateOptions {
   config: string;
@@ -20,7 +20,7 @@ export const validateCommand = new Command('validate')
       const source = createAdapter(config.source);
       const target = createAdapter(config.target);
 
-      process.stdout.write(chalk.bold(`\nValidating migration\n`));
+      process.stdout.write(chalk.bold('\nValidating migration\n'));
       process.stdout.write(
         `  Source: ${chalk.cyan(source.name)}  Target: ${chalk.cyan(target.name)}\n\n`,
       );
@@ -37,9 +37,10 @@ export const validateCommand = new Command('validate')
       const validator = new ContentValidator({ warnOnMissingOptional: true });
       const differ = new ContentDiffer({ ignoreFields: ['updatedAt', 'createdAt'] });
 
-      const contentTypes = config.contentTypes.length > 0
-        ? schema.contentTypes.filter((ct) => config.contentTypes.includes(ct.handle))
-        : schema.contentTypes;
+      const contentTypes =
+        config.contentTypes.length > 0
+          ? schema.contentTypes.filter((ct) => config.contentTypes.includes(ct.handle))
+          : schema.contentTypes;
 
       let totalErrors = 0;
       let totalWarnings = 0;
@@ -77,7 +78,9 @@ export const validateCommand = new Command('validate')
 
           for (const diff of discrepant) {
             process.stdout.write(
-              chalk.yellow(`    Discrepancy: [${diff.slug}] ${diff.differences.length} field(s) differ\n`),
+              chalk.yellow(
+                `    Discrepancy: [${diff.slug}] ${diff.differences.length} field(s) differ\n`,
+              ),
             );
             for (const fd of diff.differences.slice(0, 3)) {
               process.stdout.write(
@@ -113,7 +116,9 @@ export const validateCommand = new Command('validate')
 
       if (totalErrors > 0 || totalDiscrepancies > 0) {
         process.stderr.write(
-          chalk.red(`  Validation FAILED: ${totalErrors} schema error(s), ${totalDiscrepancies} discrepancy/discrepancies.\n\n`),
+          chalk.red(
+            `  Validation FAILED: ${totalErrors} schema error(s), ${totalDiscrepancies} discrepancy/discrepancies.\n\n`,
+          ),
         );
         process.exit(1);
       }

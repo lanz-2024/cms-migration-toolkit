@@ -1,41 +1,46 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import type { FieldSchema } from '../../src/adapters/types';
 import { FieldMapper } from '../../src/mappers/field-mapper';
 
 describe('FieldMapper', () => {
   const mapper = new FieldMapper();
 
-  it('maps Craft PlainText to Payload text', () => {
-    const result = mapper.mapField({ type: 'craft:PlainText', handle: 'title' });
-    expect(result.type).toBe('text');
+  function field(type: FieldSchema['type'], handle: string): FieldSchema {
+    return { type, handle, required: false };
+  }
+
+  it('maps text field type', () => {
+    const [result] = mapper.mapFields([field('text', 'title')]);
+    expect(result.targetType).toBe('text');
   });
 
-  it('maps Craft RichText to Payload richText', () => {
-    const result = mapper.mapField({ type: 'craft:RichText', handle: 'body' });
-    expect(result.type).toBe('richText');
+  it('maps richtext field type', () => {
+    const [result] = mapper.mapFields([field('richtext', 'body')]);
+    expect(result.targetType).toBe('richtext');
   });
 
-  it('maps Craft Assets to Payload upload', () => {
-    const result = mapper.mapField({ type: 'craft:Assets', handle: 'image' });
-    expect(result.type).toBe('upload');
+  it('maps asset field type', () => {
+    const [result] = mapper.mapFields([field('asset', 'image')]);
+    expect(result.targetType).toBe('asset');
   });
 
-  it('maps Craft Matrix to Payload blocks', () => {
-    const result = mapper.mapField({ type: 'craft:Matrix', handle: 'sections' });
-    expect(result.type).toBe('blocks');
+  it('maps matrix field type', () => {
+    const [result] = mapper.mapFields([field('matrix', 'sections')]);
+    expect(result.targetType).toBe('matrix');
   });
 
-  it('maps Craft Entries (relationship) to Payload relationship', () => {
-    const result = mapper.mapField({ type: 'craft:Entries', handle: 'relatedPosts' });
-    expect(result.type).toBe('relationship');
+  it('maps relation field type', () => {
+    const [result] = mapper.mapFields([field('relation', 'relatedPosts')]);
+    expect(result.targetType).toBe('relation');
   });
 
-  it('maps Craft Checkboxes to Payload checkbox', () => {
-    const result = mapper.mapField({ type: 'craft:Checkboxes', handle: 'options' });
-    expect(result.type).toBe('checkbox');
+  it('maps select field type', () => {
+    const [result] = mapper.mapFields([field('select', 'options')]);
+    expect(result.targetType).toBe('select');
   });
 
-  it('maps unknown field type to text with warning', () => {
-    const result = mapper.mapField({ type: 'craft:Unknown', handle: 'mystery' });
-    expect(result.type).toBe('text');
+  it('uses handle as target field by default', () => {
+    const [result] = mapper.mapFields([field('text', 'myHandle')]);
+    expect(result.targetField).toBe('myHandle');
   });
 });

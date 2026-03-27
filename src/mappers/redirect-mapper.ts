@@ -100,7 +100,8 @@ export class RedirectMapper {
    */
   renderNginx(): string {
     const lines = this.toNginx().map(
-      (r) => `rewrite ^${escapeRegex(r.from)}$ ${r.to} ${r.statusCode === 301 ? 'permanent' : 'redirect'};`,
+      (r) =>
+        `rewrite ^${escapeRegex(r.from)}$ ${r.to} ${r.statusCode === 301 ? 'permanent' : 'redirect'};`,
     );
     return lines.join('\n');
   }

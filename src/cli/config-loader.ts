@@ -7,7 +7,7 @@ import type { MigrationConfig } from '../core/config-schema.js';
 export class ConfigLoadError extends Error {
   constructor(
     message: string,
-    public readonly cause?: unknown,
+    public override readonly cause?: unknown,
   ) {
     super(message);
     this.name = 'ConfigLoadError';

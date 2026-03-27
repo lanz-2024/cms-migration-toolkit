@@ -25,8 +25,7 @@ const program = new Command();
 program
   .name('cms-migrate')
   .description(
-    chalk.bold('CMS Migration Toolkit') +
-      '\n  Migrate content between Craft CMS, Payload CMS, and WordPress',
+    `${chalk.bold('CMS Migration Toolkit')}\n  Migrate content between Craft CMS, Payload CMS, and WordPress`,
   )
   .version(getVersion(), '-v, --version', 'Print version number')
   .addHelpText(
