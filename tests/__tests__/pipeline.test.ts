@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { CMSAdapter, CMSSchema } from '../../src/adapters/types';
-import { FieldMapper } from '../../src/mappers/field-mapper';
 import { MigrationPipeline } from '../../src/core/pipeline';
+import { FieldMapper } from '../../src/mappers/field-mapper';
 
 const mockSchema: CMSSchema = {
   contentTypes: [{ handle: 'post', displayName: 'Post', fields: [] }],

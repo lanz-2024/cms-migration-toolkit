@@ -15,7 +15,9 @@ describe('RedirectMapper', () => {
     const mapper = new RedirectMapper();
     mapper.add('/old-page', '/new-page');
     const result = mapper.renderVercel();
-    const parsed = JSON.parse(result) as { redirects: Array<{ source: string; destination: string; permanent: boolean }> };
+    const parsed = JSON.parse(result) as {
+      redirects: Array<{ source: string; destination: string; permanent: boolean }>;
+    };
     expect(parsed.redirects).toBeInstanceOf(Array);
     expect(parsed.redirects[0]).toMatchObject({
       source: '/old-page',
