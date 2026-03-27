@@ -1,6 +1,6 @@
-import type { CMSAdapter } from '../adapters/types.js';
 import { CraftAdapter } from '../adapters/craft/index.js';
 import { PayloadAdapter } from '../adapters/payload/index.js';
+import type { CMSAdapter } from '../adapters/types.js';
 import { WordPressAdapter } from '../adapters/wordpress/index.js';
 import type { AdapterConfig } from '../core/config-schema.js';
 
@@ -22,17 +22,17 @@ export function createAdapter(config: AdapterConfig): CMSAdapter {
     case 'payload':
       return new PayloadAdapter({
         baseUrl: config.baseUrl,
-        apiKey: config.apiKey,
-        email: config.username,
-        password: config.password,
+        ...(config.apiKey !== undefined ? { apiKey: config.apiKey } : {}),
+        ...(config.username !== undefined ? { email: config.username } : {}),
+        ...(config.password !== undefined ? { password: config.password } : {}),
         timeout: config.timeout,
       });
 
     case 'wordpress':
       return new WordPressAdapter({
         baseUrl: config.baseUrl,
-        username: config.username,
-        applicationPassword: config.password,
+        ...(config.username !== undefined ? { username: config.username } : {}),
+        ...(config.password !== undefined ? { applicationPassword: config.password } : {}),
         timeout: config.timeout,
       });
   }

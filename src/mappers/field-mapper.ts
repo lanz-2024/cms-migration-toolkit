@@ -43,10 +43,11 @@ export class FieldMapper {
       const targetField = overrides[field.handle] ?? field.handle;
       const targetType = FIELD_TYPE_MAP[field.type] ?? 'text';
 
+      const transformFn = this.buildTransform(field);
       const rule: TransformRule = {
         sourceField: field.handle,
         targetField,
-        transform: this.buildTransform(field),
+        ...(transformFn !== undefined ? { transform: transformFn } : {}),
       };
 
       const mapping: FieldMapping = {
@@ -179,7 +180,8 @@ export class FieldMapper {
     if (Array.isArray(value)) {
       return value.map((v) => {
         if (typeof v === 'string') return { id: v };
-        if (typeof v === 'object' && v !== null) return { id: String((v as Record<string, unknown>)['id'] ?? '') };
+        if (typeof v === 'object' && v !== null)
+          return { id: String((v as Record<string, unknown>)['id'] ?? '') };
         return { id: String(v) };
       });
     }

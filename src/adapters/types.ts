@@ -17,7 +17,7 @@ export interface CMSAsset {
   filename: string;
   mimeType: string;
   size: number;
-  alt?: string;
+  alt?: string | undefined;
 }
 
 export interface CMSSchema {
