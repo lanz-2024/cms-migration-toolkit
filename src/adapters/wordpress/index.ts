@@ -70,7 +70,9 @@ export class WordPressAdapter implements CMSAdapter {
     this.timeout = config.timeout ?? 30_000;
 
     if (config.username && config.applicationPassword) {
-      const encoded = Buffer.from(`${config.username}:${config.applicationPassword}`).toString('base64');
+      const encoded = Buffer.from(`${config.username}:${config.applicationPassword}`).toString(
+        'base64',
+      );
       this.authHeader = `Basic ${encoded}`;
     } else {
       this.authHeader = '';

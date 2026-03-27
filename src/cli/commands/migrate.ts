@@ -1,11 +1,11 @@
 import chalk from 'chalk';
 import cliProgress from 'cli-progress';
 import { Command } from 'commander';
-import { createAdapter } from '../adapter-factory.js';
-import { ConfigLoadError, loadConfig } from '../config-loader.js';
-import { FieldMapper } from '../../mappers/field-mapper.js';
 import { MigrationPipeline } from '../../core/pipeline.js';
 import type { PipelineProgressEvent } from '../../core/pipeline.js';
+import { FieldMapper } from '../../mappers/field-mapper.js';
+import { createAdapter } from '../adapter-factory.js';
+import { ConfigLoadError, loadConfig } from '../config-loader.js';
 
 interface MigrateOptions {
   config: string;
@@ -24,7 +24,9 @@ export const migrateCommand = new Command('migrate')
     try {
       const config = loadConfig(opts.config);
 
-      const batchSize = opts.batchSize ? Number.parseInt(opts.batchSize, 10) : config.options.batchSize;
+      const batchSize = opts.batchSize
+        ? Number.parseInt(opts.batchSize, 10)
+        : config.options.batchSize;
 
       const checkpointFile = opts.checkpoint ?? config.options.checkpointFile;
 
@@ -32,10 +34,7 @@ export const migrateCommand = new Command('migrate')
       const target = createAdapter(config.target);
 
       process.stdout.write(
-        chalk.bold(`\nCMS Migration\n`) +
-          `  Source: ${chalk.cyan(source.name)} → Target: ${chalk.cyan(target.name)}\n` +
-          (opts.dryRun ? chalk.yellow('  Mode: DRY RUN\n') : '') +
-          '\n',
+        `${chalk.bold('\nCMS Migration\n')}  Source: ${chalk.cyan(source.name)} → Target: ${chalk.cyan(target.name)}\n${opts.dryRun ? chalk.yellow('  Mode: DRY RUN\n') : ''}\n`,
       );
 
       // Check connectivity
@@ -69,13 +68,7 @@ export const migrateCommand = new Command('migrate')
       // Progress bar
       const bar = new cliProgress.SingleBar(
         {
-          format:
-            `  ${chalk.cyan('{bar}')} {percentage}% | ` +
-            `{value}/{total} entries | ` +
-            `{contentType} | ` +
-            chalk.green('{migrated} ok') +
-            ' ' +
-            chalk.red('{failed} failed'),
+          format: `  ${chalk.cyan('{bar}')} {percentage}% | {value}/{total} entries | {contentType} | ${chalk.green('{migrated} ok')} ${chalk.red('{failed} failed')}`,
           barCompleteChar: '█',
           barIncompleteChar: '░',
           hideCursor: true,

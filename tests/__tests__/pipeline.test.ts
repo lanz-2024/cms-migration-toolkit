@@ -7,14 +7,12 @@ const mockAdapter: CMSAdapter = {
   connect: vi.fn().mockResolvedValue(undefined),
   disconnect: vi.fn().mockResolvedValue(undefined),
   getContentTypes: vi.fn().mockResolvedValue([{ handle: 'post', name: 'Post', fields: [] }]),
-  getEntries: vi
-    .fn()
-    .mockResolvedValue({
-      entries: [{ id: '1', title: 'Test Post' }],
-      total: 1,
-      page: 1,
-      totalPages: 1,
-    }),
+  getEntries: vi.fn().mockResolvedValue({
+    entries: [{ id: '1', title: 'Test Post' }],
+    total: 1,
+    page: 1,
+    totalPages: 1,
+  }),
   createEntry: vi.fn().mockResolvedValue({ id: '1', title: 'Test Post' }),
 };
 

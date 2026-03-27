@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { FieldMapper } from '../../src/mappers/field-mapper';
 
 describe('FieldMapper', () => {

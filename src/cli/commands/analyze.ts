@@ -15,7 +15,9 @@ export const analyzeCommand = new Command('analyze')
       const config = loadConfig(opts.config);
       const adapter = createAdapter(config.source);
 
-      process.stdout.write(chalk.bold(`\nAnalyzing ${chalk.cyan(adapter.name)} (${adapter.version})\n`));
+      process.stdout.write(
+        chalk.bold(`\nAnalyzing ${chalk.cyan(adapter.name)} (${adapter.version})\n`),
+      );
       process.stdout.write(chalk.dim(`  URL: ${config.source.baseUrl}\n\n`));
 
       // Test connectivity
@@ -37,10 +39,9 @@ export const analyzeCommand = new Command('analyze')
       const COL_FIELDS = 8;
       const COL_NAME = 30;
 
-      const header =
-        chalk.bold(
-          `  ${'Content Type'.padEnd(COL_HANDLE)}  ${'Fields'.padStart(COL_FIELDS)}  ${'Display Name'.padEnd(COL_NAME)}`,
-        ) + '\n';
+      const header = `${chalk.bold(
+        `  ${'Content Type'.padEnd(COL_HANDLE)}  ${'Fields'.padStart(COL_FIELDS)}  ${'Display Name'.padEnd(COL_NAME)}`,
+      )}\n`;
 
       const divider = `  ${'─'.repeat(COL_HANDLE)}  ${'─'.repeat(COL_FIELDS)}  ${'─'.repeat(COL_NAME)}\n`;
 
@@ -48,8 +49,7 @@ export const analyzeCommand = new Command('analyze')
       process.stdout.write(divider);
 
       for (const ct of schema.contentTypes) {
-        const row =
-          `  ${ct.handle.padEnd(COL_HANDLE)}  ${String(ct.fields.length).padStart(COL_FIELDS)}  ${ct.displayName.padEnd(COL_NAME)}\n`;
+        const row = `  ${ct.handle.padEnd(COL_HANDLE)}  ${String(ct.fields.length).padStart(COL_FIELDS)}  ${ct.displayName.padEnd(COL_NAME)}\n`;
         process.stdout.write(row);
 
         // List fields indented
@@ -64,9 +64,9 @@ export const analyzeCommand = new Command('analyze')
 
       process.stdout.write(divider);
       process.stdout.write(
-        `\n  ${chalk.green('✓')} ${schema.contentTypes.length} content type(s)` +
-          (schema.taxonomies.length > 0 ? `, ${schema.taxonomies.length} taxonomy/taxonomies` : '') +
-          '\n\n',
+        `\n  ${chalk.green('✓')} ${schema.contentTypes.length} content type(s)${
+          schema.taxonomies.length > 0 ? `, ${schema.taxonomies.length} taxonomy/taxonomies` : ''
+        }\n\n`,
       );
 
       if (config.contentTypes.length > 0) {
@@ -75,9 +75,10 @@ export const analyzeCommand = new Command('analyze')
         );
         if (missing.length > 0) {
           process.stdout.write(
-            chalk.yellow(`  Warning: these content types from config not found in source:\n`) +
-              missing.map((m) => `    - ${m}`).join('\n') +
-              '\n\n',
+            `${
+              chalk.yellow('  Warning: these content types from config not found in source:\n') +
+              missing.map((m) => `    - ${m}`).join('\n')
+            }\n\n`,
           );
         }
       }

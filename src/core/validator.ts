@@ -72,11 +72,19 @@ export class ContentValidator {
 
   private validateCoreFields(entry: CMSEntry, errors: ValidationError[]): void {
     if (!entry.id || typeof entry.id !== 'string') {
-      errors.push({ field: 'id', message: 'Entry must have a non-empty string id', received: entry.id });
+      errors.push({
+        field: 'id',
+        message: 'Entry must have a non-empty string id',
+        received: entry.id,
+      });
     }
 
     if (!entry.slug || typeof entry.slug !== 'string') {
-      errors.push({ field: 'slug', message: 'Entry must have a non-empty string slug', received: entry.slug });
+      errors.push({
+        field: 'slug',
+        message: 'Entry must have a non-empty string slug',
+        received: entry.slug,
+      });
     } else if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.slug)) {
       errors.push({
         field: 'slug',
@@ -87,7 +95,11 @@ export class ContentValidator {
     }
 
     if (!entry.title || typeof entry.title !== 'string') {
-      errors.push({ field: 'title', message: 'Entry must have a non-empty string title', received: entry.title });
+      errors.push({
+        field: 'title',
+        message: 'Entry must have a non-empty string title',
+        received: entry.title,
+      });
     }
 
     const validStatuses = ['published', 'draft', 'archived'] as const;
@@ -131,17 +143,34 @@ export class ContentValidator {
       case 'email':
       case 'url':
         if (typeof value !== 'string') {
-          errors.push({ field: handle, message: `Field "${handle}" must be a string`, received: typeof value, expected: 'string' });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be a string`,
+            received: typeof value,
+            expected: 'string',
+          });
         } else if (schema.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          errors.push({ field: handle, message: `Field "${handle}" is not a valid email`, received: value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" is not a valid email`,
+            received: value,
+          });
         } else if (schema.type === 'url' && !isValidUrl(value)) {
-          errors.push({ field: handle, message: `Field "${handle}" is not a valid URL`, received: value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" is not a valid URL`,
+            received: value,
+          });
         }
         break;
 
       case 'richtext':
         if (typeof value !== 'string') {
-          errors.push({ field: handle, message: `Field "${handle}" must be a string`, received: typeof value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be a string`,
+            received: typeof value,
+          });
         } else if (value.length > this.options.maxRichtextLength) {
           warnings.push({
             field: handle,
@@ -152,19 +181,31 @@ export class ContentValidator {
 
       case 'number':
         if (typeof value !== 'number' || !Number.isFinite(value)) {
-          errors.push({ field: handle, message: `Field "${handle}" must be a finite number`, received: value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be a finite number`,
+            received: value,
+          });
         }
         break;
 
       case 'boolean':
         if (typeof value !== 'boolean') {
-          errors.push({ field: handle, message: `Field "${handle}" must be a boolean`, received: typeof value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be a boolean`,
+            received: typeof value,
+          });
         }
         break;
 
       case 'date':
         if (typeof value !== 'string' || Number.isNaN(Date.parse(value))) {
-          errors.push({ field: handle, message: `Field "${handle}" must be a valid ISO date string`, received: value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be a valid ISO date string`,
+            received: value,
+          });
         }
         break;
 
@@ -185,13 +226,21 @@ export class ContentValidator {
 
       case 'relation':
         if (typeof value !== 'object' || value === null) {
-          errors.push({ field: handle, message: `Field "${handle}" must be an object reference`, received: typeof value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be an object reference`,
+            received: typeof value,
+          });
         }
         break;
 
       case 'matrix':
         if (!Array.isArray(value)) {
-          errors.push({ field: handle, message: `Field "${handle}" must be an array of blocks`, received: typeof value });
+          errors.push({
+            field: handle,
+            message: `Field "${handle}" must be an array of blocks`,
+            received: typeof value,
+          });
         }
         break;
     }
@@ -199,16 +248,28 @@ export class ContentValidator {
 
   private validateAssetField(handle: string, value: unknown, errors: ValidationError[]): void {
     if (typeof value !== 'object' || value === null) {
-      errors.push({ field: handle, message: `Field "${handle}" must be an asset object`, received: typeof value });
+      errors.push({
+        field: handle,
+        message: `Field "${handle}" must be an asset object`,
+        received: typeof value,
+      });
       return;
     }
 
     const asset = value as Record<string, unknown>;
     if (typeof asset['id'] !== 'string' || !asset['id']) {
-      errors.push({ field: handle, message: `Asset field "${handle}" must have a string id`, received: asset['id'] });
+      errors.push({
+        field: handle,
+        message: `Asset field "${handle}" must have a string id`,
+        received: asset['id'],
+      });
     }
     if (typeof asset['url'] !== 'string' || !asset['url']) {
-      errors.push({ field: handle, message: `Asset field "${handle}" must have a string url`, received: asset['url'] });
+      errors.push({
+        field: handle,
+        message: `Asset field "${handle}" must have a string url`,
+        received: asset['url'],
+      });
     }
   }
 
@@ -217,9 +278,10 @@ export class ContentValidator {
       passed: errors.length === 0,
       errors,
       warnings,
-      summary: errors.length === 0
-        ? `Validation passed with ${warnings.length} warning(s)`
-        : `Validation failed with ${errors.length} error(s) and ${warnings.length} warning(s)`,
+      summary:
+        errors.length === 0
+          ? `Validation passed with ${warnings.length} warning(s)`
+          : `Validation failed with ${errors.length} error(s) and ${warnings.length} warning(s)`,
     };
   }
 }

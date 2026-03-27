@@ -86,7 +86,10 @@ export class ContentTransformer {
     csvToArray: (value: unknown): string[] => {
       if (Array.isArray(value)) return value.map(String);
       if (typeof value !== 'string') return [];
-      return value.split(',').map((s) => s.trim()).filter(Boolean);
+      return value
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
     },
 
     /** Flatten nested object to top-level keys with dot-path names */

@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { ConfigLoadError, loadConfig } from '../config-loader.js';
 import { RedirectMapper } from '../../mappers/redirect-mapper.js';
 import type { RedirectFormat } from '../../mappers/redirect-mapper.js';
+import { ConfigLoadError, loadConfig } from '../config-loader.js';
 
 interface RedirectsOptions {
   config: string;
@@ -23,13 +23,13 @@ export const redirectsCommand = new Command('redirects')
 
       switch (format) {
         case 'nginx':
-          process.stdout.write(mapper.renderNginx() + '\n');
+          process.stdout.write(`${mapper.renderNginx()}\n`);
           break;
         case 'vercel':
-          process.stdout.write(mapper.renderVercel() + '\n');
+          process.stdout.write(`${mapper.renderVercel()}\n`);
           break;
         case 'nextjs':
-          process.stdout.write(mapper.renderNextjs() + '\n');
+          process.stdout.write(`${mapper.renderNextjs()}\n`);
           break;
         default:
           process.stderr.write(chalk.red(`Unknown format: ${String(format)}\n`));
@@ -39,7 +39,9 @@ export const redirectsCommand = new Command('redirects')
       if (err instanceof ConfigLoadError) {
         process.stderr.write(chalk.red(`Config error: ${err.message}\n`));
       } else {
-        process.stderr.write(chalk.red(`Error: ${err instanceof Error ? err.message : String(err)}\n`));
+        process.stderr.write(
+          chalk.red(`Error: ${err instanceof Error ? err.message : String(err)}\n`),
+        );
       }
       process.exit(1);
     }

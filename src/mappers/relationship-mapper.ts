@@ -85,7 +85,10 @@ export class RelationshipMapper {
     return value;
   }
 
-  private async resolveRelation(rel: UnresolvedRelation, depth: number): Promise<CMSEntry | { id: string } | null> {
+  private async resolveRelation(
+    rel: UnresolvedRelation,
+    depth: number,
+  ): Promise<CMSEntry | { id: string } | null> {
     if (!rel.id) return null;
 
     const contentType = rel.contentType ?? '';
