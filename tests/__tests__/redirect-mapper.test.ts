@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { RedirectMapper } from '../../src/mappers/redirect-mapper';
 
 describe('RedirectMapper', () => {
@@ -18,7 +18,11 @@ describe('RedirectMapper', () => {
     const result = mapper.toVercel(redirects);
     const parsed = JSON.parse(result);
     expect(parsed).toBeInstanceOf(Array);
-    expect(parsed[0]).toMatchObject({ source: '/old-page', destination: '/new-page', permanent: true });
+    expect(parsed[0]).toMatchObject({
+      source: '/old-page',
+      destination: '/new-page',
+      permanent: true,
+    });
   });
 
   it('generates Next.js redirects array', () => {
