@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { FieldMapper } from '../../src/mappers/field-mapper';
 import type { FieldSchema } from '../../src/adapters/types';
+import { FieldMapper } from '../../src/mappers/field-mapper';
 
 describe('FieldMapper', () => {
   const mapper = new FieldMapper();
